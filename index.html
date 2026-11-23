@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            display: flex;
+            justify-content: center;
+            padding: 40px 16px;
+        }
+        form {
+            background: white;
+            padding: 24px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 280px;
+        }
+        h1 {
+            text-align: center;
+        }
+        input, select, button {
+            padding: 8px;
+            font-size: 16px;
+        }
+        button {
+            margin-top: 8px;
+            background: #2f6fd6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #resultado {
+            margin-top: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            word-break: break-all;
+            text-align: center;
+        }
+        main {
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+    <h1>Calculadora</h1>
+    <form action="/" method="get">
+        <label for="a">Primer numero</label>
+        <input type="number" id="a" name="a" min="-99999" max="99999" step="1" required>
+
+        <label for="operacion">Operacion</label>
+        <select id="operacion" name="operacion">
+            <option value="suma">Suma (+)</option>
+            <option value="resta">Resta (-)</option>
+            <option value="multiplicacion">Multiplicacion (x)</option>
+            <option value="potencia">Potencia (^)</option>
+        </select>
+
+        <label for="b">Segundo numero</label>
+        <input type="number" id="b" name="b" min="-99999" max="99999" step="1" required>
+
+        <button type="submit">Calcular</button>
+    </form>
+    <p id="resultado">{{resultado}}</p>
+    </main>
+</body>
+</html>
