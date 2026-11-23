@@ -38,8 +38,11 @@ public class Calculadora {
     }
 
     static String calcular(Map<String, String> datos) {
-        int a = Integer.parseInt(datos.get("a"));
-        int b = Integer.parseInt(datos.get("b"));
+        Integer a = leerNumero(datos.get("a"));
+        Integer b = leerNumero(datos.get("b"));
+        if (a == null || b == null) {
+            return "Error: los numeros tienen que ser enteros entre -99999 y 99999";
+        }
         switch (datos.get("operacion")) {
             case "suma":
                 return a + " + " + b + " = " + sumar(a, b);
@@ -52,6 +55,13 @@ public class Calculadora {
             default:
                 return "Operacion no valida";
         }
+    }
+
+    static Integer leerNumero(String texto) {
+        if (texto == null || !texto.matches("-?\\d{1,5}")) {
+            return null;
+        }
+        return Integer.parseInt(texto);
     }
 
     static long sumar(int a, int b) {
