@@ -13,8 +13,10 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+// Calculadora web: suma, resta, multiplicacion y potencia con enteros de -99999 a 99999
 public class Calculadora {
 
+    // Arranca el servidor en http://localhost:8080
     public static void main(String[] args) throws IOException {
         HttpServer servidor = HttpServer.create(new InetSocketAddress("127.0.0.1", 8080), 0);
         servidor.createContext("/", Calculadora::atender);
@@ -22,6 +24,7 @@ public class Calculadora {
         System.out.println("Calculadora abierta en http://localhost:8080");
     }
 
+    // Devuelve index.html con el resultado de la operacion, si se ha pedido una
     static void atender(HttpExchange intercambio) throws IOException {
         String ruta = intercambio.getRequestURI().getPath();
         if (!ruta.equals("/") && !ruta.equals("/index.html")) {
@@ -37,6 +40,7 @@ public class Calculadora {
         responder(intercambio, 200, pagina);
     }
 
+    // Lee los dos numeros y la operacion del formulario y devuelve el texto del resultado
     static String calcular(Map<String, String> datos) {
         Integer a = leerNumero(datos.get("a"));
         Integer b = leerNumero(datos.get("b"));
@@ -57,6 +61,7 @@ public class Calculadora {
         }
     }
 
+    // Devuelve el numero si es un entero de hasta 5 cifras, si no devuelve null
     static Integer leerNumero(String texto) {
         if (texto == null || !texto.matches("-?\\d{1,5}")) {
             return null;
@@ -64,6 +69,7 @@ public class Calculadora {
         return Integer.parseInt(texto);
     }
 
+    // Operaciones permitidas. Se usa long porque el resultado puede pasar del limite de int
     static long sumar(int a, int b) {
         return (long) a + b;
     }
@@ -76,6 +82,7 @@ public class Calculadora {
         return (long) a * b;
     }
 
+    // BigInteger porque la potencia puede ser enorme; con exponente negativo el resultado es decimal
     static String potencia(int base, int exponente) {
         if (exponente >= 0) {
             return BigInteger.valueOf(base).pow(exponente).toString();
@@ -87,6 +94,7 @@ public class Calculadora {
         return BigDecimal.ONE.divide(divisor, MathContext.DECIMAL64).toString();
     }
 
+    // Separa los parametros de la URL (a=5&operacion=suma&b=3)
     static Map<String, String> leerParametros(String consulta) {
         Map<String, String> datos = new HashMap<>();
         if (consulta == null) {
@@ -100,6 +108,7 @@ public class Calculadora {
         return datos;
     }
 
+    // Envia la respuesta al navegador
     static void responder(HttpExchange intercambio, int codigo, String texto) throws IOException {
         byte[] bytes = texto.getBytes(StandardCharsets.UTF_8);
         intercambio.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
